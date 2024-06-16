@@ -2,40 +2,57 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/model/category.dart';
 import 'package:meals_app/model/meal.dart';
 
+// Constants in Dart should be written in lowerCamelcase.
 const categories = [
   Category(
     id: 'c1',
-    title: 'Chinese',
+    title: 'Italian',
     color: Colors.purple,
   ),
   Category(
     id: 'c2',
-    title: 'cat2',
+    title: 'Quick & Easy',
+    color: Colors.red,
   ),
   Category(
     id: 'c3',
-    title: 'Cat3ese',
-    color: Colors.blue,
+    title: 'Hamburgers',
+    color: Colors.orange,
   ),
   Category(
     id: 'c4',
-    title: 'Cat4ese',
-    color: Colors.white,
+    title: 'German',
+    color: Colors.amber,
   ),
   Category(
     id: 'c5',
-    title: 'Cat5ese',
-    color: Colors.green,
+    title: 'Light & Lovely',
+    color: Colors.blue,
   ),
   Category(
     id: 'c6',
-    title: 'Cat7ese',
-    color: Colors.yellow,
+    title: 'Exotic',
+    color: Colors.green,
   ),
   Category(
     id: 'c7',
-    title: 'Cat8ese',
-    color: Colors.purple,
+    title: 'Breakfast',
+    color: Colors.lightBlue,
+  ),
+  Category(
+    id: 'c8',
+    title: 'Asian',
+    color: Colors.lightGreen,
+  ),
+  Category(
+    id: 'c9',
+    title: 'French',
+    color: Colors.pink,
+  ),
+  Category(
+    id: 'c10',
+    title: 'Summer',
+    color: Colors.teal,
   ),
 ];
 
