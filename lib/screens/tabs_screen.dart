@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals_app/model/meal.dart';
 import 'package:meals_app/providers/favorite_meals_provider.dart';
+import 'package:meals_app/providers/filters_provider.dart';
 import 'package:meals_app/providers/meals_provider.dart';
 import 'package:meals_app/screens/categories_screen.dart';
 import 'package:meals_app/screens/filter_screen.dart';
@@ -19,12 +20,6 @@ class TabsScreen extends ConsumerStatefulWidget {
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedTabIndex = 0;
-  Map<Filter, bool> _selectedFilters = {
-    Filter.glutenFree: false,
-    Filter.lactoseFree: false,
-    Filter.vegetarian: false,
-    Filter.vegan: false,
-  };
 
   void _onTabSelect(int index) {
     setState(() {
@@ -32,40 +27,26 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     });
   }
 
-  void _showInfoMessage(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
-
   void _onSelectScreen(String identifiers) async {
     Navigator.of(context).pop();
     if (identifiers == 'filters') {
-      final result = await Navigator.of(context).push<Map<Filter, bool>>(
+      await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
-          builder: (ctx) => FilterScreen(
-            currentFilters: _selectedFilters,
-          ),
+          builder: (ctx) => const FilterScreen(),
         ),
       );
-
-      setState(() {
-        _selectedFilters = result ?? _selectedFilters;
-      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final meals = ref.watch(mealsProvider);
+    final activeFilters = ref.watch(filtersProvider);
     final List<Meal> availableMeals = meals.where((meal) {
-      if ((_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) ||
-          (_selectedFilters[Filter.lactoseFree]! && !meal.isLactoseFree) ||
-          (_selectedFilters[Filter.vegetarian]! && !meal.isVegetarian) ||
-          (_selectedFilters[Filter.vegan]! && !meal.isVegan)) return false;
+      if ((activeFilters[Filter.glutenFree]! && !meal.isGlutenFree) ||
+          (activeFilters[Filter.lactoseFree]! && !meal.isLactoseFree) ||
+          (activeFilters[Filter.vegetarian]! && !meal.isVegetarian) ||
+          (activeFilters[Filter.vegan]! && !meal.isVegan)) return false;
       return true;
     }).toList();
 
